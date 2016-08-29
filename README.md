@@ -1,9 +1,8 @@
 # HOW 
 
 ```
-set -x GOPATH /Users/lukasgin/liip/Go/testing/
-go install github.com/user/hello
-eval $GOPATH/bin/hello 
+go get github.com/user/hello
+hello
 ```
 
 Responses with
