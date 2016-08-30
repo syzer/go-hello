@@ -29,3 +29,17 @@ func Boring(msg string, c chan string) {
 	}
 }
 
+// function that returns a channel
+func Boring_channel(msg string) <-chan string {
+	//returns recive only channels of strings
+	c := make(chan string)
+	go func() {
+		// goroutine
+		for i := 0; ; i++ {
+			c <- fmt.Sprintf("%s %d", msg, i)
+			time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+		}
+	}()
+	return c // returns a channel
+}
+
