@@ -13,6 +13,12 @@ Bonjour
 
 # Run as single file
 ```
-go run fibonacci.go
-go test fibonacci_test.go 
+go run main.go
+```
+
+# Other
+```
+go build
+go install
+go test -v github.com/syzer/go-hello/util
 ```
