@@ -1,4 +1,4 @@
-package main
+package boring
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ func main() {
 	fmt.Printf("Hello world!")
 	fmt.Println("Listening")
 	// couroutine
-	go boring("boring ", c)
+	go Boring("boring ", c)
 
 	for i := 0; i < 10; i++ {
 		// receive expression is just a value
@@ -21,7 +21,7 @@ func main() {
 	fmt.Println("Timeout bitches")
 }
 
-func boring(msg string, c chan string) {
+func Boring(msg string, c chan string) {
 	for i := 0; ; i++ {
 		c <- fmt.Sprintf("%s %d", msg, i)
 		//		fmt.Println(msg, i)
