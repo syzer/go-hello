@@ -11,7 +11,7 @@ func main() {
 	fmt.Printf("Hello world!")
 	fmt.Println("Listening")
 	// couroutine
-	go Boring("boring ", c)
+	go boring.Boring("boring ", c)
 
 	for i := 0; i < 10; i++ {
 		// receive expression is just a value

@@ -1,4 +1,4 @@
-package stata
+package util
 
 // Math average of a series of numbers
 func Average(xs []float64) float64 {

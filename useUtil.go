@@ -7,6 +7,6 @@ import (
 
 func main() {
 	xs := []float64{1, 2, 3, 4}
-	avg := stata.Average(xs)
+	avg := util.Average(xs)
 	fmt.Println(avg)
 }
