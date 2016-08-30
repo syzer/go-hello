@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/syzer/go-hello/src/stata"
+	"github.com/syzer/go-hello/util"
 )
 
 func main() {
