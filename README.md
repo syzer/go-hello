@@ -21,4 +21,5 @@ go run main.go
 go build
 go install
 go test -v github.com/syzer/go-hello/util
+godoc ./util/
 ```
