@@ -9,18 +9,8 @@ import (
 )
 
 func Serve() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(`
-        <html>
-          <head>
-            <title>Hello</title>
-          </head>
-	  <body>
-	    Hello World!
-	  </body>
-	</html>
-`))
-	})
+
+	http.Handle("/", &templateHandler{filename: "main.html"})
 
 	if err := http.ListenAndServe(":3000", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
@@ -38,7 +28,8 @@ type templateHandler struct {
 // ServeHTTP handles the HTTP request.
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
-		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+		// if execucutable then relative part gives problems!!!
+		t.templ = template.Must(template.ParseFiles(filepath.Join(".", "html", t.filename)))
 	})
 	t.templ.Execute(w, nil)
 }

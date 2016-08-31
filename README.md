@@ -23,3 +23,10 @@ go install
 go test -v github.com/syzer/go-hello/util
 godoc ./util/
 ```
+
+# chat
+```
+go build -o webServer/chat
+cd webServer
+./chat
+```
