@@ -6,12 +6,9 @@ import (
 	"github.com/syzer/go-hello/boring"
 	"github.com/syzer/go-hello/util"
 	"github.com/syzer/go-hello/ranges"
-	"github.com/syzer/go-hello/webServer"
 )
 
 func main() {
-
-	webServer.Serve()
 
 	c := make(chan string)
 	fmt.Printf("Hello world!")
