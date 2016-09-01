@@ -18,7 +18,7 @@ func main() {
 func getContent(fileName string) {
 	bs, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		fmt.Println("%s", err)
+		fmt.Printf("Cannot open file %s", fileName)
 		return
 	}
 	str := string(bs)
