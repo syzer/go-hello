@@ -6,13 +6,22 @@ import (
 	"path/filepath"
 	"sync"
 	"text/template"
+	"flag"
 )
 
 func Serve() {
+	var port = flag.String("addr", ":3000", "Address of the application")
+	flag.Parse()
+
+	r := newRoom()
 
 	http.Handle("/", &templateHandler{filename: "main.html"})
-
-	if err := http.ListenAndServe(":3000", nil); err != nil {
+	http.Handle("/room", r)
+	// get the room, cooroutine/thread
+	go r.run()
+	log.Println("Starting on: %s", *port)
+	// start on 3000
+	if err := http.ListenAndServe(*port, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
@@ -31,5 +40,6 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// if execucutable then relative part gives problems!!!
 		t.templ = template.Must(template.ParseFiles(filepath.Join(".", "html", t.filename)))
 	})
-	t.templ.Execute(w, nil)
+	// pass request as data object
+	t.templ.Execute(w, r)
 }

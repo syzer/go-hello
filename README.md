@@ -28,5 +28,8 @@ godoc ./util/
 ```
 go build -o webServer/chat
 cd webServer
-./chat
+./chat -addr="192.168.0.1:3000"
+
+#or
+./chat -addr=":3001"
 ```
