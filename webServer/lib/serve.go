@@ -7,6 +7,8 @@ import (
 	"sync"
 	"text/template"
 	"flag"
+	"os"
+	"github.com/syzer/go-hello/webServer/lib/trace"
 )
 
 func Serve() {
@@ -14,6 +16,7 @@ func Serve() {
 	flag.Parse()
 
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/", &templateHandler{filename: "main.html"})
 	http.Handle("/room", r)

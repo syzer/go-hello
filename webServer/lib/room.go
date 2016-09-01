@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"log"
 	"github.com/gorilla/websocket"
+	"github.com/syzer/go-hello/webServer/lib/trace"
 )
 
 const (
@@ -24,6 +25,10 @@ type Room struct {
 
 	// clients holds all current clients in this room.
 	clients map[*client]bool
+
+	// tracer will receive trace information of activity
+	// in the room.
+	tracer  trace.Tracer
 }
 
 // newRoom makes a new room that is ready to go.
@@ -46,6 +51,7 @@ func (r *Room) run() {
 		case client := <-r.join:
 		// its stores the reference in a map ex{2132342:true}
 			r.clients[client] = true
+			r.tracer.Trace("New client joined")
 
 		// leaving
 		case client := <-r.leave:
@@ -53,6 +59,7 @@ func (r *Room) run() {
 			delete(r.clients, client)
 		// close his channel
 			close(client.send)
+			r.tracer.Trace("Client left")
 
 		// forward/broadcast message to all clients
 		case msg := <-r.forward:
@@ -60,10 +67,12 @@ func (r *Room) run() {
 				select {
 				// send the message
 				case client.send <- msg:
+					r.tracer.Trace(" -- sent to client")
 				// failed to send
 				default:
 					delete(r.clients, client)
 					close(client.send)
+					r.tracer.Trace(" -- failed to send, cleaned up client")
 				}
 			}
 		}
