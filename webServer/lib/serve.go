@@ -18,8 +18,14 @@ func Serve() {
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
 
-	http.Handle("/", &templateHandler{filename: "main.html"})
+	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/room", r)
+
+	http.Handle("/assets", http.StripPrefix("/assets",
+		http.FileServer(http.Dir("assets"))))
+
+	http.Handle("/login", &templateHandler{filename: "login.html"})
+
 	// get the room, cooroutine/thread
 	go r.run()
 	log.Println("Starting on: %s", *port)
@@ -28,7 +34,6 @@ func Serve() {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
-
 
 // templ represents a single template
 type templateHandler struct {
