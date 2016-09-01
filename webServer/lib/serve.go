@@ -21,8 +21,8 @@ func Serve() {
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/room", r)
 
-	http.Handle("/assets", http.StripPrefix("/assets",
-		http.FileServer(http.Dir("assets"))))
+	fs := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 
