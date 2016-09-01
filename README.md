@@ -30,6 +30,9 @@ go build -o webServer/chat
 cd webServer
 ./chat -addr="192.168.0.1:3000"
 
-#or
+# or
 ./chat -addr=":3001"
+
+# or
+fresh go run main.go    
 ```

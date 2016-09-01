@@ -19,12 +19,14 @@ func Serve() {
 	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
-	http.Handle("/room", r)
 
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	http.Handle("/login", &templateHandler{filename: "login.html"})
+	http.HandleFunc("/auth", loginHandler)
+
+	http.Handle("/room", r)
 
 	// get the room, cooroutine/thread
 	go r.run()
