@@ -26,7 +26,7 @@ func Serve() {
 		google.New("key", "secret", protocol + "://" + addr + "/auth/callback/google"),
 		github.New("key", "secret", protocol + "://" + addr + "/auth/callback/github"),
 		facebook.New("key", "secret", protocol + "://" + addr + "/auth/callback/facebook"),
-)
+	)
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)

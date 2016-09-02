@@ -5,6 +5,8 @@ import (
 	"strings"
 	"log"
 	"fmt"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/objx"
 )
 
 type authHandler struct {
@@ -50,7 +52,47 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch action {
 	case "login":
-		log.Println("Handle login", provider)
+		log.Println("Handling login", provider)
+		provider, err := gomniauth.Provider(provider)
+		if err != nil {
+			log.Fatalln("Providel not found", provider, err)
+		}
+		loginUrl, err := provider.GetBeginAuthURL(nil, nil)
+		if err != nil {
+			log.Fatalln("Error trying to get begining url", provider, err)
+			w.WriteHeader(http.StatusTemporaryRedirect)
+			w.Header().Set("Location", loginUrl)
+		}
+
+	case "callback":
+		provider, err := gomniauth.Provider(provider)
+		if err != nil {
+			log.Fatalln("Error trying to get provider", provider, err)
+		}
+		creds, err := provider.CompleteAuth(objx.MustFromURLQuery(r.URL.RawQuery))
+		if err != nil {
+			log.Fatalln("Error trying deserialize auth callback cookie", provider, err)
+		}
+
+		user, err := provider.GetUser(creds)
+		if err != nil {
+			log.Fatalln("Error deserializing user from ", provider, err)
+		}
+
+		// if we store user data better to use sign cookies
+		authCookie := objx.New(map[string]interface{}{
+			"name": user.Name(),
+		}).MustBase64()
+
+		http.SetCookie(w, &http.Cookie{
+			Name: "auth",
+			Value: authCookie,
+			Path: "/",
+		})
+
+		w.WriteHeader(http.StatusTemporaryRedirect)
+		w.Header()["Location"] = []string{"/chat"}
+
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Auth action %s not supported", action)
