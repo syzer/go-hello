@@ -79,6 +79,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln("Error deserializing user from ", provider, err)
 		}
 
+		// TODO also use google email
 		// if we store user data better to use sign cookies
 		authCookie := objx.New(map[string]interface{}{
 			"name": user.Name(),

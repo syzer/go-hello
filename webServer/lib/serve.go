@@ -17,15 +17,16 @@ import (
 
 func Serve() {
 	var addr = flag.String("addr", ":3000", "Address of the application")
-	var protocol = flag.String("protocol", "http", "Address of the application")
+	//TODO use protocol
+	//var protocol = flag.String("protocol", "http", "Address of the application")
 	flag.Parse()
 
 	//TODO extract cont
 	gomniauth.SetSecurityKey("14DOURGWzy2ZkagebOHXC9TS7PEZ6j")
 	gomniauth.WithProviders(
-		google.New("key", "secret", protocol + "://" + addr + "/auth/callback/google"),
-		github.New("key", "secret", protocol + "://" + addr + "/auth/callback/github"),
-		facebook.New("key", "secret", protocol + "://" + addr + "/auth/callback/facebook"),
+		google.New("key", "secret", "http://auth/callback/google"),
+		github.New("key", "secret", "http://auth/callback/github"),
+		facebook.New("key", "secret", "http://auth/callback/facebook"),
 	)
 
 	r := newRoom()

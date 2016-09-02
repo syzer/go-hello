@@ -1,13 +1,13 @@
 package lib
 
-func FbCredentials() string {
+func FbCredentials() (string, string) {
 	return "key", "secret"
 }
 
-func GoogleCredentials() string {
+func GoogleCredentials() (string, string) {
 	return "key", "secret"
 }
 
-func GithubCredentials() string {
+func GithubCredentials() (string, string) {
 	return "key", "secret"
 }
