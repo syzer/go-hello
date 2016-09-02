@@ -19,12 +19,14 @@ func Serve() {
 	var addr = flag.String("addr", ":3000", "Address of the application")
 	//TODO use protocol
 	//var protocol = flag.String("protocol", "http", "Address of the application")
+	var googleSecret = flag.String("secret", "no-way", "Please provide google secret")
+	var googleClientId = flag.String("client", "no-way", "Please provide google clientId")
 	flag.Parse()
 
 	//TODO extract cont
 	gomniauth.SetSecurityKey("14DOURGWzy2ZkagebOHXC9TS7PEZ6j")
 	gomniauth.WithProviders(
-		google.New("key", "secret", "http://auth/callback/google"),
+		google.New(*googleClientId, *googleSecret, "http://127.0.0.1:8000/auth/callback/google"),
 		github.New("key", "secret", "http://auth/callback/github"),
 		facebook.New("key", "secret", "http://auth/callback/facebook"),
 	)
