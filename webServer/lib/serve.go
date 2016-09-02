@@ -9,11 +9,16 @@ import (
 	"flag"
 	"os"
 	"github.com/syzer/go-hello/webServer/lib/trace"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/facebook"
 )
 
 func Serve() {
-	var port = flag.String("addr", ":3000", "Address of the application")
+	var addr = flag.String("addr", ":3000", "Address of the application")
 	flag.Parse()
+
+	gomniauth.SetSecurityKey("some long key")
+	gomniauth.WithProviders(facebook.New("key", "secret"))
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
@@ -30,9 +35,9 @@ func Serve() {
 
 	// get the room, cooroutine/thread
 	go r.run()
-	log.Println("Starting on: %s", *port)
+	log.Println("Starting on: %s", *addr)
 	// start on 3000
-	if err := http.ListenAndServe(*port, nil); err != nil {
+	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
