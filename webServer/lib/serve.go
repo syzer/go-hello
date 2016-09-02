@@ -11,14 +11,22 @@ import (
 	"github.com/syzer/go-hello/webServer/lib/trace"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/facebook"
+	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/gomniauth/providers/github"
 )
 
 func Serve() {
 	var addr = flag.String("addr", ":3000", "Address of the application")
+	var protocol = flag.String("protocol", "http", "Address of the application")
 	flag.Parse()
 
-	gomniauth.SetSecurityKey("some long key")
-	gomniauth.WithProviders(facebook.New("key", "secret"))
+	//TODO extract cont
+	gomniauth.SetSecurityKey("14DOURGWzy2ZkagebOHXC9TS7PEZ6j")
+	gomniauth.WithProviders(
+		google.New("key", "secret", protocol + "://" + addr + "/auth/callback/google"),
+		github.New("key", "secret", protocol + "://" + addr + "/auth/callback/github"),
+		facebook.New("key", "secret", protocol + "://" + addr + "/auth/callback/facebook"),
+)
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
