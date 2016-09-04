@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 0
 // <nil>
@@ -11,8 +13,7 @@ func main() {
 
 	withPanic()
 
-
-	x :=0
+	x := 0
 	changeValue(&x)
 	fmt.Println("x is:", x)
 }
