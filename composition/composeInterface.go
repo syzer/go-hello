@@ -13,8 +13,6 @@ func main() {
 	fmt.Println("Circle area", getArea(circ))
 }
 
-
-
 type Shape interface {
 	area() float64
 }
