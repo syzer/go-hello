@@ -13,6 +13,7 @@ import (
 	"github.com/stretchr/gomniauth/providers/facebook"
 	"github.com/stretchr/gomniauth/providers/google"
 	"github.com/stretchr/gomniauth/providers/github"
+	"github.com/stretchr/objx"
 )
 
 func Serve() {
@@ -63,9 +64,18 @@ type templateHandler struct {
 // ServeHTTP handles the HTTP request.
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
-		// if execucutable then relative part gives problems!!!
+		// if executable then relative part gives problems!!!
 		t.templ = template.Must(template.ParseFiles(filepath.Join(".", "html", t.filename)))
 	})
+
+	data := map[string]interface{}{
+		"Host": r.Host,
+	}
+	// added data in runtime
+	if authCookie, err := r.Cookie("auth"); err == nil {
+		data["UserData"] = objx.MustFromBase64(authCookie.Value)
+	}
+
 	// pass request as data object
-	t.templ.Execute(w, r)
+	t.templ.Execute(w, data)
 }
