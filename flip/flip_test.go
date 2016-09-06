@@ -5,11 +5,19 @@ import (
 	"log"
 )
 
-func TestFlip(t *testing.T) {
-	res := flip("┬─┬ノ(º_ºノ)\n")
+func TestFlipToAngry(t *testing.T) {
+	res := flip("┬─┬ノ(º_ºノ)")
 
-	if res != "(╯°□°）╯︵ ┻━┻" {
+	// TODO "(╯°□°）╯︵ ┻━┻"
+	if res != "┻━┻(╯°□°）╯" {
 		log.Fatal("table not flipped %s", res)
-		t.Fail()
+	}
+}
+
+func TestFlipToCalm(t *testing.T) {
+	res := flip("┻━┻(╯°□°）╯")
+
+	if res != "┬─┬ノ(º_ºノ)" {
+		log.Fatal("table not flipped %s", res)
 	}
 }
