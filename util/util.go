@@ -9,7 +9,6 @@ func Average(xs []float64) float64 {
 	return total / float64(len(xs))
 }
 
-
 type Message struct {
 	str  string
 	wait chan bool
@@ -21,12 +20,12 @@ func FanIn(input1, input2 <-chan string) <-chan string {
 		for {
 			c <- <-input1
 		}
-	}()                        //copy input1 to channel
+	}() //copy input1 to channel
 	go func() {
 		for {
 			c <- <-input2
 		}
-	}()                        //copy input2 to channel
+	}() //copy input2 to channel
 	return c
 }
 

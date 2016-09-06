@@ -2,8 +2,8 @@ package boring
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"time"
 )
 
 func main() {
@@ -42,4 +42,3 @@ func Boring_channel(msg string) <-chan string {
 	}()
 	return c // returns a channel
 }
-

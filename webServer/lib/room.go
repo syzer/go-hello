@@ -1,15 +1,15 @@
 package lib
 
 import (
-	"net/http"
-	"log"
 	"github.com/gorilla/websocket"
-	"github.com/syzer/go-hello/webServer/lib/trace"
 	"github.com/stretchr/objx"
+	"github.com/syzer/go-hello/webServer/lib/trace"
+	"log"
+	"net/http"
 )
 
 const (
-	socketBufferSize = 1024
+	socketBufferSize  = 1024
 	messageBufferSize = 256
 )
 
@@ -19,17 +19,17 @@ type Room struct {
 	forward chan *message
 
 	// join is a channel for clients wishing to join the room.
-	join    chan *client
+	join chan *client
 
 	// leave is a channel for clients wishing to leave the room.
-	leave   chan *client
+	leave chan *client
 
 	// clients holds all current clients in this room.
 	clients map[*client]bool
 
 	// tracer will receive trace information of activity
 	// in the room.
-	tracer  trace.Tracer
+	tracer trace.Tracer
 }
 
 // newRoom makes a new room that is ready to go.
@@ -40,7 +40,7 @@ func newRoom() *Room {
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
-		tracer: trace.Off(),
+		tracer:  trace.Off(),
 	}
 }
 
@@ -52,15 +52,15 @@ func (r *Room) run() {
 		select {
 		// joining
 		case client := <-r.join:
-		// its stores the reference in a map ex{2132342:true}
+			// its stores the reference in a map ex{2132342:true}
 			r.clients[client] = true
 			r.tracer.Trace("New client joined")
 
 		// leaving
 		case client := <-r.leave:
-		// kick client from map
+			// kick client from map
 			delete(r.clients, client)
-		// close his channel
+			// close his channel
 			close(client.send)
 			r.tracer.Trace("Client left")
 
@@ -83,7 +83,7 @@ func (r *Room) run() {
 }
 
 var upgrader = &websocket.Upgrader{
-	ReadBufferSize:socketBufferSize,
+	ReadBufferSize:  socketBufferSize,
 	WriteBufferSize: socketBufferSize,
 }
 
@@ -103,9 +103,9 @@ func (r *Room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	client := &client{
-		socket: socket,
-		send:   make(chan *message, messageBufferSize),
-		room:   r,
+		socket:   socket,
+		send:     make(chan *message, messageBufferSize),
+		room:     r,
 		userData: objx.MustFromBase64(authCookie.Value),
 	}
 	r.join <- client

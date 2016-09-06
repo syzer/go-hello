@@ -1,19 +1,19 @@
 package lib
 
 import (
-	"net/http"
+	"flag"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/facebook"
+	"github.com/stretchr/gomniauth/providers/github"
+	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/objx"
+	"github.com/syzer/go-hello/webServer/lib/trace"
 	"log"
+	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
-	"flag"
-	"os"
-	"github.com/syzer/go-hello/webServer/lib/trace"
-	"github.com/stretchr/gomniauth"
-	"github.com/stretchr/gomniauth/providers/facebook"
-	"github.com/stretchr/gomniauth/providers/google"
-	"github.com/stretchr/gomniauth/providers/github"
-	"github.com/stretchr/objx"
 )
 
 func Serve() {

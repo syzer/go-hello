@@ -1,12 +1,12 @@
 package lib
 
 import (
-	"net/http"
-	"strings"
-	"log"
 	"fmt"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/objx"
+	"log"
+	"net/http"
+	"strings"
 )
 
 type authHandler struct {
@@ -40,11 +40,11 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch provider {
 	case "google":
-		break;
+		break
 	case "facebook":
-		break;
+		break
 	case "github":
-		break;
+		break
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Auth provider %s not supported", provider)
@@ -86,9 +86,9 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}).MustBase64()
 
 		http.SetCookie(w, &http.Cookie{
-			Name: "auth",
+			Name:  "auth",
 			Value: authCookie,
-			Path: "/",
+			Path:  "/",
 		})
 
 		w.WriteHeader(http.StatusTemporaryRedirect)

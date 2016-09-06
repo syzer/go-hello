@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"github.com/syzer/go-hello/boring"
-	"github.com/syzer/go-hello/util"
 	"github.com/syzer/go-hello/ranges"
+	"github.com/syzer/go-hello/util"
+	"time"
 )
 
 func main() {
@@ -22,7 +22,6 @@ func main() {
 	}
 	time.Sleep(10 * time.Second)
 	fmt.Println("Timeout bitches")
-
 
 	// multiplexer
 	d := util.FanIn(boring.Boring_channel("John"), boring.Boring_channel("Ann"))

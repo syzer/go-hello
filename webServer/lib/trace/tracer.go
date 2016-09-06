@@ -1,8 +1,8 @@
 package trace
 
 import (
-	"io"
 	"fmt"
+	"io"
 )
 
 // Tracer is the interface that describes an object capable of
@@ -24,9 +24,9 @@ func (t *tracer) Trace(a ...interface{}) {
 	t.out.Write([]byte("\n"))
 }
 
-type nilTracer struct {}
+type nilTracer struct{}
 
-func (t *nilTracer) Trace(a ...interface{}){}
+func (t *nilTracer) Trace(a ...interface{}) {}
 
 // Off creates a Trace that will ignore calls to Trace
 func Off() Tracer {

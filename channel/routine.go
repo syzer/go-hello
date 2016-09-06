@@ -1,13 +1,14 @@
 package main
 
 import (
-	"time"
 	"fmt"
 	"strconv"
+	"time"
 )
 
 var carNum = 0
 var carName = ""
+
 const sleepTime = 6
 
 func makeCarChassis(stringChan chan string) {

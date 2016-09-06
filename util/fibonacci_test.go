@@ -1,9 +1,9 @@
 package util_test
 
 import (
-	"testing"
 	"fmt"
 	"github.com/syzer/go-hello/util"
+	"testing"
 )
 
 func TestFibonacci(t *testing.T) {

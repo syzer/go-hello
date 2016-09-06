@@ -2,8 +2,8 @@ package generator
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"time"
 )
 
 func main() {

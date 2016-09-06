@@ -8,11 +8,11 @@ import (
 // client represents a single chatting user.
 type client struct {
 	// socket is the web socket for this client.
-	socket   *websocket.Conn
+	socket *websocket.Conn
 	// send is a channel on which messages are sent.
-	send     chan *message
+	send chan *message
 	// room is the room this client is chatting in.
-	room     *Room
+	room *Room
 	// user info
 	userData map[string]interface{}
 }
@@ -41,5 +41,3 @@ func (c *client) write() {
 	}
 	c.socket.Close()
 }
-
-

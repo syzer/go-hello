@@ -1,0 +1,16 @@
+[{
+  "author": "attila@slack.eu",
+  "title":  "My Blog",
+  "url":    "http://slack.eu"
+}, {
+  "author": 1234567890,
+  "title":  "Westartup",
+  "url":    "http://www.westartup.eu"
+}, {
+  "author": {
+    "id":    1234567890,
+    "email": "nospam@westartup.eu"
+  },
+  "title":  "Westartup",
+  "url":    "http://www.westartup.eu"
+}]
