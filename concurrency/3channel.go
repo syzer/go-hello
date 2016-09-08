@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"time"
-	"fmt"
 )
 
 func main() {
