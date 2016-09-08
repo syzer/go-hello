@@ -1,8 +1,8 @@
 package main
 
 import (
-	"testing"
 	"log"
+	"testing"
 )
 
 func TestFlipToAngry(t *testing.T) {
