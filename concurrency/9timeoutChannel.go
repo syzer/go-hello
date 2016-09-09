@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	// like stream.join
 	c := generator4("dupa")
 	timeout := time.After(3 * time.Second)
 
