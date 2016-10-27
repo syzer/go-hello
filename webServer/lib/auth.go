@@ -15,7 +15,7 @@ type authHandler struct {
 
 func (h *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if _, err := r.Cookie("auth"); err == http.ErrNoCookie {
-		// no cookie... diet?
+		log.Println("no cookie... diet?")
 		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	} else if err != nil {
@@ -37,9 +37,10 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	segs := strings.Split(r.URL.Path, "/")
 	action := segs[2]
 	provider := segs[3]
-
+	log.Println(provider)
 	switch provider {
 	case "google":
+		log.Println("Logging with google")
 		break
 	case "facebook":
 		break

@@ -27,7 +27,7 @@ func Serve() {
 	//TODO extract cont
 	gomniauth.SetSecurityKey("14DOURGWzy2ZkagebOHXC9TS7PEZ6j")
 	gomniauth.WithProviders(
-		google.New(*googleClientId, *googleSecret, "http://127.0.0.1:8000/auth/callback/google"),
+		google.New(*googleClientId, *googleSecret, "http://127.0.0.1"+addr+"/auth/callback/google"),
 		github.New("key", "secret", "http://auth/callback/github"),
 		facebook.New("key", "secret", "http://auth/callback/facebook"),
 	)
