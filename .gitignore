@@ -48,3 +48,4 @@ fabric.properties
 /webServer/chat
 /file/test.txt
 .env
+run.sh
