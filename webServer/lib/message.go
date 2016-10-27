@@ -5,7 +5,8 @@ import "time"
 // we gonna pass round that object
 
 type message struct {
-	Name    string
-	Message string
-	When    time.Time
+	Name      string
+	Message   string
+	When      time.Time
+	AvatarURL string
 }

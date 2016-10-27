@@ -14,7 +14,7 @@ type authHandler struct {
 }
 
 func (h *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if _, err := r.Cookie("auth"); err == http.ErrNoCookie {
+	if cookie, err := r.Cookie("auth"); err == http.ErrNoCookie || cookie.Value == "" {
 		log.Println("no cookie... diet?")
 		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusTemporaryRedirect)
@@ -33,11 +33,11 @@ func MustAuth(handler http.Handler) http.Handler {
 }
 
 // /auth/{action=login|callback}/{provider}
-func loginHandler(w http.ResponseWriter, r *http.Request) {
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("login")
 	segs := strings.Split(r.URL.Path, "/")
 	action := segs[2]
 	provider := segs[3]
-	log.Println(provider)
 	switch provider {
 	case "google":
 		log.Println("Logging with google")
@@ -47,6 +47,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	case "github":
 		break
 	default:
+		log.Printf("No auth provider %s", provider)
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Auth provider %s not supported", provider)
 	}
@@ -58,6 +59,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatalln("Providel not found", provider, err)
 		}
+		// Redirect, but don't modify state, and
+		// dont provide additional parameter.
 		loginUrl, err := provider.GetBeginAuthURL(nil, nil)
 		if err != nil {
 			log.Fatalln("Error trying to get begining url", provider, err)
@@ -83,7 +86,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		// TODO also use google email
 		// if we store user data better to use sign cookies
 		authCookie := objx.New(map[string]interface{}{
-			"name": user.Name(),
+			"name":       user.Name(),
+			"avatar_url": user.AvatarURL(),
 		}).MustBase64()
 
 		http.SetCookie(w, &http.Cookie{
@@ -96,7 +100,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header()["Location"] = []string{"/chat"}
 
 	default:
-		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Auth action %s not supported", action)
+		w.WriteHeader(http.StatusNotFound)
 	}
 }
