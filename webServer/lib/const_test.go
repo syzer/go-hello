@@ -6,8 +6,8 @@ import (
 )
 
 func TestFbCredentials(t *testing.T) {
-	cred := FbCredentials()
-	if cred == nil {
+	cred, _ := FbCredentials()
+	if cred == "" {
 		t.Error("Return from New should not be nil")
 	}
 	//TODO

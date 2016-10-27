@@ -39,6 +39,8 @@ func Serve() {
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 
 	http.HandleFunc("/auth", LoginHandler)
+	http.HandleFunc("/auth/login/google", LoginHandler)
+	http.HandleFunc("/auth/callback/google", LoginHandler)
 
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &http.Cookie{

@@ -34,7 +34,6 @@ func MustAuth(handler http.Handler) http.Handler {
 
 // /auth/{action=login|callback}/{provider}
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("login")
 	segs := strings.Split(r.URL.Path, "/")
 	action := segs[2]
 	provider := segs[3]
@@ -47,7 +46,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	case "github":
 		break
 	default:
-		log.Printf("No auth provider %s", provider)
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "Auth provider %s not supported", provider)
 	}
@@ -69,6 +67,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 	case "callback":
+		log.Println("Handling callback", provider)
 		provider, err := gomniauth.Provider(provider)
 		if err != nil {
 			log.Fatalln("Error trying to get provider", provider, err)

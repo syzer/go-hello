@@ -19,5 +19,5 @@ func TestAuthAvatar(t *testing.T) {
 		if url != testUrl {
 			t.Error("AuthAvatar.GetAvatarURL should return correct URL")
 		}
-	} }
+	}
 }
