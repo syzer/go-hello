@@ -47,7 +47,7 @@ func Serve() {
 
 	// get the room, cooroutine/thread
 	go r.run()
-	log.Println("Starting on: %s", *addr)
+	log.Printf("Starting on http://localhost%v", *addr)
 	// start on 3000
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
